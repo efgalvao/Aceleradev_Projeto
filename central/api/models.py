@@ -39,7 +39,7 @@ class Erro(models.Model):
     ]
     level = models.CharField(max_length=20, choices=ERROR_LEVEL)
     title = models.CharField("Título", max_length=50)
-    description = models.TextField("Descrição")
+    details = models.TextField("Descrição")
     arquivado = models.BooleanField('Arquivado', default=False)
     date = models.DateField('Data', auto_now=True)
     agent = models.OneToOneField(Agent, on_delete=models.CASCADE)

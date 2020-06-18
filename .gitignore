@@ -1,3 +1,7 @@
+/.git
+/Projeto final.code-workspace
+/login.py
+/projeto_final_arquivos
 *.code-workspace
 .idea/
 .vscode/

@@ -1,1 +1,1 @@
-Repositório com os códigos dos desafios semanais da Aceleração de Python.
+Repositório com os códigos do projeto final da Aceleração de Python.

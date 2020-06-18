@@ -14,11 +14,11 @@ class User(models.Model):
         return self.name
 
 class Agent(models.Model):
-    name = models.CharField('Nome', max_length=50)
+    name = models.CharField('Nome', max_length=50, unique=True)
     status = models.BooleanField()
     env = models.CharField(max_length=20)
     version = models.CharField('Version', max_length=5)
-    address = models.GenericIPAddressField('Address', protocol="IPV4", default="0.0.0.0")
+    address = models.GenericIPAddressField('Address', protocol="IPV4", default="0.0.0.0", unique=True)
 
     def __str__(self):
         return self.name
@@ -42,11 +42,11 @@ class Erro(models.Model):
     details = models.TextField("Descrição")
     arquivado = models.BooleanField('Arquivado', default=False)
     date = models.DateField('Data', auto_now=True)
-    agent = models.OneToOneField(Agent, on_delete=models.CASCADE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    agent = models.OneToOneField(Agent, on_delete=models.CASCADE, null=True)
+    
 
     def __str__(self):
-        return self.title
+        return self.title, self.agent.address
 class GroupUser(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

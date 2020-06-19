@@ -1,9 +1,7 @@
 from django.contrib import admin
-from api.models import User, Agent, Group, Erro, GroupUser
+from api.models import Livro, Autor, Genero
 # Register your models here.
 
-admin.site.register(User)
-admin.site.register(Agent)
-admin.site.register(Group)
-admin.site.register(Erro)
-admin.site.register(GroupUser)
+admin.site.register(Livro)
+admin.site.register(Autor)
+admin.site.register(Genero)

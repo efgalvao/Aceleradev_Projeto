@@ -1,52 +1,36 @@
 from django.db import models
-from django.core import validators
 
 # Create your models here.
 
-class User(models.Model):
-    name = models.CharField('Nome', max_length=50)
-    last_login = models.DateTimeField('Último login', auto_now_add=True)
-    email = models.EmailField('E-mail', max_length=254)
-    password = models.CharField('Senha', max_length=50, 
-    validators=[validators.MinLengthValidator(8)])
+class Genero(models.Model):
+    genero = models.CharField("Genêro", max_length= 20)
+    teste = models.CharField("teste", max_length=5, default="teste")
 
     def __str__(self):
-        return self.name
+        return self.genero
 
-class Agent(models.Model):
-    name = models.CharField('Nome', max_length=50, unique=True)
-    status = models.BooleanField()
-    env = models.CharField(max_length=20)
-    version = models.CharField('Version', max_length=5)
-    address = models.GenericIPAddressField('Address', protocol="IPV4", default="0.0.0.0", unique=True)
+class Autor(models.Model):
+    nome = models.CharField("Nome", max_length=100)
 
     def __str__(self):
-        return self.name
+        return self.nome
 
-class Group(models.Model):
-    name = models.CharField("Nome", max_length=50)
-
-    def __str__(self):
-        return self.name
-
-class Erro(models.Model):
-    ERROR_LEVEL = [
-        ('CRITICAL', 'CRITICAL'),
-        ('DEBUG', 'DEBUG'),
-        ('ERROR', 'ERROR'),
-        ('WARNING', 'WARNING'),
-        ('INFO', 'INFO'),
-    ]
-    level = models.CharField(max_length=20, choices=ERROR_LEVEL)
-    title = models.CharField("Título", max_length=50)
-    details = models.TextField("Descrição")
-    arquivado = models.BooleanField('Arquivado', default=False)
-    date = models.DateField('Data', auto_now=True)
-    agent = models.OneToOneField(Agent, on_delete=models.CASCADE, null=True)
+class Livro(models.Model):
+    titulo = models.CharField("Título", max_length=150)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
+    paginas = models.IntegerField("Páginas")
+    genero = models.ForeignKey(Genero, on_delete=models.CASCADE)
     
+    class Meta:
+        ordering = ["titulo"]
 
     def __str__(self):
-        return self.title, self.agent.address
-class GroupUser(models.Model):
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+        return self.titulo
+
+class Mae(models.Model):
+    nome = models.CharField(max_length=10)
+    teste = models.CharField(max_length=5)
+
+class Filha(models.Model):
+    nome = models.CharField(max_length=20)
+    mae = models.ForeignKey(Mae, related_name="related", on_delete=models.CASCADE)

@@ -25,7 +25,7 @@ class Livro(models.Model):
         ordering = ["titulo"]
 
     def __str__(self):
-        return self.titulo
+        return self.titul0
 
 class Mae(models.Model):
     nome = models.CharField(max_length=10)

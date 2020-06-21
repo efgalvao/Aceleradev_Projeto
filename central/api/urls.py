@@ -1,14 +1,17 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from api import views
+from .views import UserAPI_objects, UserAPI_objects_details, AgentAPI_objects, \
+    AgentAPI_objects_details, GroupAPI_objects, GroupAPI_objects_details, EventAPI_objects, EventPI_objects_details
 
 urlpatterns = [
-    path('basic/', views.LivroAPI_objects.as_view()),
-    path('basic/<int:pk>/', views.LivroAPI_objects_details.as_view()),
-    path('basic/', views.AutorAPI_objects.as_view()),
-    path('basic/<int:pk>/', views.AutorAPI_objects_details.as_view()),    
-    path('basic/', views.GeneroAPI_objects.as_view()),
-    path('basic/<int:pk>/', views.GeneroAPI_objects_details.as_view()),
+    path('basic/', UserAPI_objects.as_view()),
+    path('basic/<int:pk>/', UserAPI_objects_details.as_view()),
+    path('basic/', AgentAPI_objects.as_view()),
+    path('basic/<int:pk>/', AgentAPI_objects_details.as_view()),
+    path('basic/', GroupAPI_objects.as_view()),
+    path('basic/<int:pk>/', GroupAPI_objects_details.as_view()),
+    path('basic/', EventAPI_objects.as_view()),
+    path('basic/<int:pk>/', EventPI_objects_details.as_view()),
 
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

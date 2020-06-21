@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import User, Agent, Group, Event, Groupuser
+from .models import User, Agent, Group, Event
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,9 +20,4 @@ class GroupSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
         class Meta:
             model = Event
-            fields = '__all__'
-
-    class GroupuserSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Groupuser
             fields = '__all__'

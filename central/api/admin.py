@@ -7,5 +7,3 @@ admin.site.register(User)
 admin.site.register(Agent)
 admin.site.register(Group)
 admin.site.register(Event)
-
-hhhhhhhhhhhhhh hhhhhhhhh hhhhhhhhhhhhhh hhhhhhh hhhhhhhhhhhhhhh hhhhhhhhh hhhhhhhhh hhhhhhhhhhh hhhhh hhhhhhhhh hhhhhhhhhhh

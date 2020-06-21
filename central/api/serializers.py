@@ -2,17 +2,27 @@ from rest_framework import serializers
 from api.models import Livro, Autor, Genero
 
 
-class LivroSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
         class Meta:
-            model = Livro
+            model = User
             fields = '__all__'
     
-class AutorSerializer(serializers.ModelSerializer):
+class AgentSerializer(serializers.ModelSerializer):
         class Meta:
-            model = Autor
+            model = Agent
             fields = '__all__'
 
-class GeneroSerializer(serializers.ModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
         class Meta:
-            model = Genero
+            model = Group
+            fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Event
+            fields = '__all__'
+
+    class GroupuserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Groupuser
             fields = '__all__'

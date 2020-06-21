@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Livro, Autor, Genero
+from api.models import User, Agent, Group, Event, Groupuser
 
 
 class UserSerializer(serializers.ModelSerializer):

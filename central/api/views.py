@@ -1,29 +1,26 @@
 from django.shortcuts import render
 from rest_framework import generics
 from api.models import Livro, Autor, Genero
-from api.serializers import LivroSerializer, AutorSerializer, GeneroSerializer
+from api.serializers import UserSerializer, AgentSerializer, GroupSerializer, EventSerializer, GroupuserSerializer
 
 # Create your views here.
    
-class LivroAPI_objects(generics.ListCreateAPIView):
-        queryset = Livro.objects.all()
-        serializer_class = LivroSerializer
+class UserAPI_objects(generics.ListCreateAPIView):
+        queryset = User.objects.all()
+        serializer_class = UserSerializer
 
-class AutorAPI_objects(generics.ListCreateAPIView):
-        queryset = Autor.objects.all()
-        serializer_class = AutorSerializer
+class AgentPI_objects(generics.ListCreateAPIView):
+        queryset = Agent.objects.all()
+        serializer_class = AgentSerializer
 
-class GeneroAPI_objects(generics.ListCreateAPIView):
-        queryset = Genero.objects.all()
-        serializer_class = GeneroSerializer
-class LivroAPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
-        queryset = Livro.objects.all()
-        serializer_class = LivroSerializer
+class GroupAPI_objects(generics.ListCreateAPIView):
+        queryset = Group.objects.all()
+        serializer_class = GroupSerializer
+        
+class EventPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
+        queryset = Event.objects.all()
+        serializer_class = EventSerializer
 
-class AutorAPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
-        queryset = Autor.objects.all()
-        serializer_class = AutorSerializer
-
-class GeneroAPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
-        queryset = Genero.objects.all()
-        serializer_class = GeneroSerializer
+class GroupuserAPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
+        queryset = Groupuser.objects.all()
+        serializer_class = GroupuserSerializer

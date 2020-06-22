@@ -36,17 +36,14 @@ class Group(models.Model):
 
 class Event(models.Model):
     ERROR_LEVEL = [('CRITICAL', 'CRITICAL'), ('DEBUG', 'DEBUG'), ('ERROR', 'ERROR'),
-            ('WARNING', 'WARNING'), ('INFO', 'INFO'), ]
+                   ('WARNING', 'WARNING'), ('INFO', 'INFO'), ]
     level = models.CharField(max_length=20, choices=ERROR_LEVEL)
-    title = models.CharField(("Título"), max_length=50)
-    details = models.TextField("Dados")
+    title = models.CharField("Título", max_length=50)
+    data = models.TextField("Dados")
     arquivado = models.BooleanField('Arquivado', default=False)
-    date = models.DateField('Data', auto_now=True)
-    name = models.ForeignKey('Agent', related_name="Name+",
-                                   on_delete=models.CASCADE)
-    address = models.ForeignKey('Agent', related_name="Address+",
-                                      on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
+    date = models.DateTimeField('Data')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    agent = models.ForeignKey(Agent, related_name='agent_name', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

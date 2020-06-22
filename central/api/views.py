@@ -15,7 +15,7 @@ class UserAPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
 
 class AgentAPI_objects(generics.ListCreateAPIView):
         queryset = Agent.objects.all()
-        serializer_class = Agent
+        serializer_class = AgentSerializer
 
 class AgentAPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
         queryset = Agent.objects.all()

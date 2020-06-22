@@ -18,6 +18,11 @@ class GroupSerializer(serializers.ModelSerializer):
             fields = '__all__'
 
 class EventSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Event
-            fields = '__all__'
+    address = serializers.ReadOnlyField(source='agent.address')
+    name = serializers.ReadOnlyField(source='agent.name')
+    group = serializers.ReadOnlyField(source='user.group')
+
+    class Meta:
+        model = Event
+        fields = ('id', 'level', 'title', 'data', 'arquivado', 'agent', 'date', 'name',
+                  'address', 'user', 'group')

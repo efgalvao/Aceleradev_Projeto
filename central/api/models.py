@@ -1,19 +1,17 @@
 from django.db import models
 from django.core import validators
 
-
 # Create your models here.
 
-
 class User(models.Model):
-    name = models.CharField('Nome', max_length=50)
     last_login = models.DateTimeField('Último login', auto_now_add=True)
     email = models.EmailField('E-mail', max_length=254, unique=True)
     password = models.CharField('Senha', max_length=50,
                                 validators=[validators.MinLengthValidator(8)])
+    group = models.ForeignKey(Group, related_name='groups', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.email
 
 
 class Agent(models.Model):
@@ -42,8 +40,9 @@ class Event(models.Model):
     data = models.TextField("Dados")
     arquivado = models.BooleanField('Arquivado', default=False)
     date = models.DateTimeField('Data')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    agent = models.ForeignKey(Agent, related_name='agent_name', on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE, blank=True, \
+                                                                                     null=True)
+    agent = models.ForeignKey(Agent, related_name='events', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

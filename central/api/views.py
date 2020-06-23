@@ -37,9 +37,6 @@ class EventPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
         queryset = Event.objects.all()
         serializer_class = EventSerializer
 
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
-
 from .forms import SignUpForm
 
 def signup(request):

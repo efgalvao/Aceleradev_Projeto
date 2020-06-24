@@ -2,7 +2,6 @@ from django.core.validators import MinLengthValidator
 from django.core.validators import EmailValidator
 from django.core.validators import validate_ipv4_address
 from django.db import models
-from datetime import datetime
 
 # Create your models here.
 
@@ -31,7 +30,7 @@ class User(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(validators=[EmailValidator], null=True)
     password = models.CharField(max_length=50, validators=[min_validator])
-    last_login = models.DateField(default=date.today)
+    last_login = models.DateField(auto_now_add=True)
     group = models.ManyToManyField(Group)
 
     def __str__(self):
@@ -70,6 +69,7 @@ class Event(models.Model):
     class Meta:
         ordering = ['date']
 
+
 """
 class Mae(models.Model):
     nome = models.CharField(max_length=10)
@@ -77,5 +77,6 @@ class Mae(models.Model):
 
 class Filha(models.Model):
     nome = models.CharField(max_length=20)
-    mae = models.ForeignKey(Mae, related_name="related", on_delete=models.CASCADE)
+    mae = models.ForeignKey(Mae, related_name="related",
+                             on_delete=models.CASCADE)
 """

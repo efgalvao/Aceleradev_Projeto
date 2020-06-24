@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .models import User, Agent, Group, Event
-from .serializers import UserSerializer, AgentSerializer, GroupSerializer, EventSerializer
+from .serializers import UserSerializer, AgentSerializer
+from .serializers import GroupSerializer, EventSerializer
 
 # Create your views here.
    
+
 class UserAPI_objects(generics.ListCreateAPIView):
         queryset = User.objects.all()
         serializer_class = UserSerializer
@@ -37,13 +39,3 @@ class EventPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
         queryset = Event.objects.all()
         serializer_class = EventSerializer
 
-from .forms import SignUpForm
-
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = SignUpForm()
-    return render(request, 'api/signup.html', {'form': form})

@@ -14,7 +14,7 @@ LEVEL_CHOICES = [
     ('information', 'info'),
 ]
 
-min_validator = MinLengthValidator(8, 'the password cant be small then 8')
+min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')
 
 
 class Group(models.Model):

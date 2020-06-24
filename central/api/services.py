@@ -11,6 +11,10 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'api/signup.html', {'form': form})
 
+def get_all_events(request):
+    queryset = Event.objects.all()
+    return queryset
+
 def get_all_events_by_group(request, group):
     queryset = Event.objects.filter(agent__user__group=group)
     return queryset

@@ -6,7 +6,7 @@ from django.db import models
 # Create your models here.
 
 LEVEL_CHOICES = [
-    ('critical', 'critical.'),
+    ('critical', 'critical'),
     ('debug', 'debug'),
     ('error', 'error'),
     ('warning', 'warning'),

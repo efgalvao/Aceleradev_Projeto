@@ -4,8 +4,8 @@ from .models import User, Agent, Group, Event
 from .serializers import UserSerializer, AgentSerializer
 from .serializers import GroupSerializer, EventSerializer
 
+
 # Create your views here.
-   
 
 class UserAPI_objects(generics.ListCreateAPIView):
         queryset = User.objects.all()

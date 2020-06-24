@@ -22,4 +22,4 @@ class EventSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Event
-        fields = ('level', 'data', 'arquivado', 'agent', 'date', 'address')
+        fields = ('level', 'data', 'arquivado', 'date', 'address', 'agent')

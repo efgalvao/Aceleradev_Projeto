@@ -10,3 +10,10 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'api/signup.html', {'form': form})
+
+def get_all_events_by_group(request, group):
+    queryset = Event.objects.filter(agent__user__group=group)
+    return queryset
+
+def order_events_by_level(request)
+    queryset = Event.objects.order_by('level')

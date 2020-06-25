@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import SignUpForm
-
+from .models import Event
 
 def signup(request):
     if request.method == 'POST':
@@ -11,7 +11,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'api/signup.html', {'form': form})
 
-def get_all_events(request):
+def get_all_events():
     queryset = Event.objects.all()
     return queryset
 

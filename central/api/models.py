@@ -59,7 +59,7 @@ class Agent(models.Model):
 class Event(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
     data = models.TextField(max_length=500)
-    agent = models.OneToOneField(Agent, on_delete=models.PROTECT)
+    agent = models.ForeignKey(Agent, on_delete=models.PROTECT)
     arquivado = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -69,14 +69,3 @@ class Event(models.Model):
     class Meta:
         ordering = ['date']
 
-
-"""
-class Mae(models.Model):
-    nome = models.CharField(max_length=10)
-    teste = models.CharField(max_length=5)
-
-class Filha(models.Model):
-    nome = models.CharField(max_length=20)
-    mae = models.ForeignKey(Mae, related_name="related",
-                             on_delete=models.CASCADE)
-"""

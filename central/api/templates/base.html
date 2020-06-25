@@ -1,12 +1,19 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+
 
 <div class="main"> 
   
-    {% for data in dataset %}. 
-  
-    {{ data.title }}<br/> 
-    {{ data.description }}<br/> 
-    <hr/> 
+    {% for i in object_list %}
+    {{ i.address}}
     'Hello World'
     {% endfor %} 
   
 </div> 
+</body>
+</html>

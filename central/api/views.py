@@ -4,6 +4,7 @@ from .models import User, Agent, Group, Event
 from .serializers import UserSerializer, AgentSerializer
 from .serializers import GroupSerializer, EventSerializer
 from .services import get_all_events
+from django.views.generic.list import ListView
 
 # Create your views here.
 
@@ -39,5 +40,7 @@ class EventPI_objects_details(generics.RetrieveUpdateDestroyAPIView):
         queryset = Event.objects.all()
         serializer_class = EventSerializer
 
-def event_list(request):
-        return render(request, get_all_events)
+class Event_list(ListView):
+    model=Event
+    template_name='base.html'
+

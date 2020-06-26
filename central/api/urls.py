@@ -15,7 +15,7 @@ urlpatterns = [
         path('group/<int:pk>/', GroupAPI_objects_details.as_view()),
         path('event/', EventAPI_objects.as_view()),
         path('event/<int:pk>/', EventPI_objects_details.as_view()),
-        path('events/', Event_list.as_view(), name="event_list"),
+        path('events/', Event_list.as_view(), name="events_list"),
         path('signup/', signup, name='signup'),
        
         ]

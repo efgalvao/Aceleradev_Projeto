@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from .models import Event
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
 from django.contrib.auth.models import User
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import RegisterForm
+#from .forms import RegisterForm
 
 """
 def user_register(request):
@@ -82,20 +81,14 @@ from django import forms
 from django.core.exceptions import ValidationError
  
  
-        
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm
+from django.shortcuts import redirect
  
-
-def register(request):
-    if request.method == 'POST':
-        f = CustomUserCreationForm(request.POST)
-        if f.is_valid():
-            f.save()
-            messages.success(request, 'Account created successfully')
-            return redirect('register')
- 
-    else:
-        f = CustomUserCreationForm()
- 
-    return render(request, 'cadmin/register.html', {'form': f})
+class Register(CreateView):
+    template_class = 'api/register.html'
+    form_class = CustomUserCreationForm
+    success_url = '/admin'
+    
+    

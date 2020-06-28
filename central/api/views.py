@@ -9,6 +9,8 @@ from django.views import View
 
 # Create your views here.
 
+# Sign Up View
+
 class UserAPI_objects(generics.ListCreateAPIView):
         queryset = User.objects.all()
         serializer_class = UserSerializer
@@ -45,3 +47,4 @@ class Event_list(View):
     def get(self, request):
         events = get_all_events()
         return render(request, 'api/event_list.html', {'events':events})
+

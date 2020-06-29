@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from rest_framework import generics
-from rest_framework.views import APIView
+from django.views import View
 from .models import Event
 from .serializers import EventSerializer
 from .services import get_all_events
-from django.views.generic.list import ListView
-from django.views import View
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
 # Create your views here.
 
 # Sign Up View

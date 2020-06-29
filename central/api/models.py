@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractBaseUser
 from django.core.validators import MinLengthValidator
 from django.core.validators import EmailValidator
 from django.core.validators import validate_ipv4_address
@@ -26,9 +27,9 @@ class Group(models.Model):
         ordering = ['name']
 
 
-class User(models.Model):
+class User(AbstractBaseUser):
     name = models.CharField(max_length=50)
-    email = models.EmailField(validators=[EmailValidator], null=True)
+    email = models.EmailField(validators=[EmailValidator], null=True, unique=True)
     password = models.CharField(max_length=50, validators=[min_validator])
     last_login = models.DateField(auto_now_add=True)
     group = models.ManyToManyField(Group)

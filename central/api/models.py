@@ -1,9 +1,9 @@
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator
 from django.core.validators import EmailValidator
 from django.core.validators import validate_ipv4_address
 from django.db import models
-
+from users.models import CustomUser
 # Create your models here.
 
 LEVEL_CHOICES = [
@@ -16,7 +16,7 @@ LEVEL_CHOICES = [
 
 min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')
 
-
+"""
 class Group(models.Model):
     name = models.CharField(max_length=20, blank=True)
 
@@ -27,7 +27,8 @@ class Group(models.Model):
         ordering = ['name']
 
 
-class User(AbstractBaseUser):
+
+class User(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(validators=[EmailValidator], null=True, unique=True)
     password = models.CharField(max_length=50, validators=[min_validator])
@@ -39,11 +40,11 @@ class User(AbstractBaseUser):
 
     class Meta:
         ordering = ['name']
-
+"""
 
 class Agent(models.Model):
     name = models.CharField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, null=True)
     address = models.GenericIPAddressField(
         validators=[validate_ipv4_address], null=True)
     status = models.BooleanField(default=False)

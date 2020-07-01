@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import EmailValidator
+from django.core.validators import MinLengthValidator
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
@@ -6,6 +8,25 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.base_user import BaseUserManager
 
+
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+        
+class Group(models.Model):
+    name = models.CharField(max_length=20, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
 
 class CustomUserManager(BaseUserManager):
     """
@@ -41,7 +62,20 @@ class CustomUserManager(BaseUserManager):
         
 class CustomUser(AbstractUser):
     username = None
-    email = models.EmailField(_('email address'), unique=True)
+    name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(validators=[EmailValidator], unique=True)
+    password = models.CharField(max_length=50, validators=[MinLengthValidator(8)])
+    last_login = models.DateField(auto_now_add=True)
+    group = models.ManyToManyField(Group)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        ordering = ['email']
+
+
+    # email = models.EmailField(_('email address'), unique=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
+from rest_auth.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls', namespace="api")),
-    path('', include('users.urls')),
+    path('user/', include('users.urls')),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-
+          
 ]

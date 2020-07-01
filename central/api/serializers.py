@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from .models import User, Agent, Group, Event
+from .models import Agent, Event
+from users.models import CustomUser, Group
 
 
 class UserSerializer(serializers.ModelSerializer):
         class Meta:
-            model = User
-            fields = '__all__'
+            model = CustomUser
+            fields = ('email', 'username', )
     
 class AgentSerializer(serializers.ModelSerializer):
         class Meta:

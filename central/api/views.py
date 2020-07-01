@@ -7,10 +7,25 @@ from .services import get_all_events
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+#teste cadastrar
+from rest_framework.views import APIView
 
 # Create your views here.
 
-# Sign Up View
+class Event_list(APIView):
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
+    """
+    def get(self, request, format=None):
+        events = get_all_events()
+        return render(request, 'api/event_list.html', {'events':events})
+    """
+    def get(self, request):
+        events = get_all_events()
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data, 'api/event_list.html')
+
+
 
 class EventAPI_objects(generics.ListCreateAPIView):
     queryset = Event.objects.all()
@@ -29,11 +44,4 @@ class EventAPI_objects_details(generics.RetrieveAPIView):
     #permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-class Event_list(View):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        events = get_all_events()
-        return render(request, 'api/event_list.html', {'events':events})
 

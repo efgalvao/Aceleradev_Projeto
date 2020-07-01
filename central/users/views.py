@@ -17,11 +17,40 @@ from rest_framework.authtoken.views import ObtainAuthToken, APIView
 from users.serializers import CadastroSerializer
 from users.models import CustomUser
 from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.generics import CreateAPIView
+from django.shortcuts import redirect
 #teste cadastrar
 class HomePageView(TemplateView):
     template_name = 'home.html'
+    
+    def get_user(request):
+        user = request.user
+        token = Token.objects.get(user=user).key
+    
 
-class Cadastrar_View(APIView):
+class Cadastrar_View(CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CadastroSerializer
+    permission_classes = (AllowAny, )
+    
+    def get(self, request):
+        serializer = CadastroSerializer
+        return render(request, "cadastrar.html", {"serializer": serializer })
+
+    def post(self, request):
+        serializer = CadastroSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            user = serializer.save()
+            data['response'] = "Usuário criado com sucesso"
+            data['email'] = user.email
+            token = Token.objects.get(user=user).key
+            data['token'] = token
+        else:
+            data = serializer.errors
+        return redirect('users:login')
+"""
+class Cadastrar_View(CreateAPIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'cadastrar.html'
 
@@ -42,9 +71,9 @@ class Cadastrar_View(APIView):
         else:
             data = serializer.errors
         return Response(data)
-    
+"""    
 
-class Login(TemplateView):
+class Login_View(TemplateView):
     form_class = CadastroSerializer
     success_url = reverse_lazy('home')
     template_name = 'login.html'
@@ -56,4 +85,10 @@ class User_list(APIView):
         events = CustomUser.objects.all()
         tokens= Token.objects.all()
         return render(request, 'user_list.html', {'tokens':tokens})
+
+class Logout_View(APIView):
+    def get(self, request):
+        data = "Tchau"
+        return Response(data)
+
 

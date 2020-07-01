@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <h1 align='center'>User List</h1>
+    <div class="main"> 
+    {% for i in tokens %}
+    <div style="width:80%;margin:0 auto; font-size:150%">
+    <table>
+        <tr style="text-align:right">
+            <th>Event Level :</th>
+            <td>{{ i }}</td>
+        </tr>
+        <tr style="text-align:right">
+            <th>Titulo :</th>
+            <td>{{ i.key }}</td>
+        </tr>
+        <tr style="text-align:right">
+            <th>Date :</th>
+            <td>{{ i.date }}</td>
+        </tr>
+        <tr style="text-align:right">
+            <th>Detalhes :</th>
+            <td>{{ i.data }}</td>
+        </tr>
+    </table>
+</div>
+
+
+
+{% endfor %} 
+  
+</div> 
+</body>
+</html>

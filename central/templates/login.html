@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2>Entrar</h2>
-<form method="post">
+<form action="{% url 'users:login' %}" method="post" novalidate>
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" value="Entrar">Login</button>

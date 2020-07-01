@@ -4,10 +4,15 @@ from users.models import CustomUser, Group
 
 
 class UserSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = CustomUser
-            fields = ('email', 'username', )
-    
+    token = serializers.SerializerMethodField('get_token')
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'username', 'token', )
+
+    def get_token(self, user):
+        token = token.key
+        return token
+
 class AgentSerializer(serializers.ModelSerializer):
         class Meta:
             model = Agent

@@ -21,7 +21,8 @@ from rest_auth.views import LoginView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls', namespace="api")),
-    path('user/', include('users.urls')),
+    path('user/', include('users.urls', namespace="users")),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('rest/', include('rest_framework.urls')),
           
 ]

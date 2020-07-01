@@ -1,13 +1,15 @@
 from rest_framework import serializers
 from users.models import CustomUser
 
-class CadastroSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ['email', 'password']
-        extra_kwarGS={
-            'password' : {'write_only' : True}
-        }
+class CadastroSerializer(serializers.Serializer):
+    email = serializers.EmailField(
+        max_length=100,
+        style={'placeholder': 'Email', 'autofocus': True}
+    )
+    password = serializers.CharField(
+        max_length=100,
+        style={'input_type': 'password', 'placeholder': 'Password'}
+    )
 
     def save(self):
         user = CustomUser(
@@ -17,3 +19,13 @@ class CadastroSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+"""
+class CadastroSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'password']
+        extra_kwargs={
+            'password' : {'write_only' : True}
+        }
+"""

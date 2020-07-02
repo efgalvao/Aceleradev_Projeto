@@ -1,7 +1,10 @@
-{% extends 'base.html' %}
+{% extends "rest_framework/login_base.html" %}
+{% block branding %}
+   <h3 style="margin: 0 0 20px;">My site</h3>
+{% endblock %}
+
 {% block title %}Entrar{% endblock %}
 
-{% block content %}
 {% load rest_framework %}
 
 <h2>Entrar</h2>

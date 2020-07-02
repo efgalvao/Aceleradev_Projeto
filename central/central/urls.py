@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/', include('api.urls', namespace="api")),
     path('user/', include('users.urls', namespace="users")),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('rest/', include('rest_framework.urls')),
+    path('', include('rest_framework.urls', namespace='rest_framework'), name='login'),
+
           
 ]

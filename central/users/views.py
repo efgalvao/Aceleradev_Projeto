@@ -48,35 +48,18 @@ class Cadastrar_View(CreateAPIView):
             data['token'] = token
         else:
             data = serializer.errors
-        return redirect('users:login')
-"""
-class Cadastrar_View(CreateAPIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'cadastrar.html'
+        return redirect('login/')
 
+class Login_View(CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CadastroSerializer
+    permission_classes = (AllowAny, )
+    
     def get(self, request):
-        serializer = CadastroSerializer
-        return render(request, "cadastrar.html", {"serializer": serializer })
+        return render(request, "login.html")
 
     def post(self, request):
-        serializer = CadastroSerializer(data=request.data)
-        data = {}
-        if serializer.is_valid():            
-            user = serializer.save()
-            print(data)
-            data['response'] = "Usuário criado com sucesso"
-            data['email'] = user.email
-            token = Token.objects.get(user=user).key
-            data['token'] = token
-        else:
-            data = serializer.errors
-        return Response(data)
-"""    
-
-class Login_View(TemplateView):
-    form_class = CadastroSerializer
-    success_url = reverse_lazy('home')
-    template_name = 'login.html'
+        return redirect('users:login')
 
 class User_list(APIView):
     #authentication_classes = [TokenAuthentication]

@@ -1,7 +1,13 @@
 from rest_framework import serializers
 from users.models import CustomUser
+from rest_framework.validators import UniqueValidator
 
 class CadastroSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=CustomUser.objects.all())])
+    password = serializers.CharField(style={'input_type': 'password'})
+    
     class Meta:
         model = CustomUser
         fields = ('email', 'password')
@@ -16,31 +22,3 @@ class CadastroSerializer(serializers.ModelSerializer):
         user.save()
         return user
         
-    
-    
-"""
-    email = serializers.EmailField(
-        max_length=100,
-        style={'placeholder': 'Email', 'autofocus': True}
-    )
-    password = serializers.CharField(
-        max_length=100,
-        style={'input_type': 'password', 'placeholder': 'Password'}
-    )
-
-    def save(self):
-        password = validated_data.pop('password')
-        user = CustomUser(**validated_data)
-        user.set_password(password)
-        user.save()
-        return user
-
-
-class CadastroSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ['email', 'password']
-        extra_kwargs={
-            'password' : {'write_only' : True}
-        }
-"""

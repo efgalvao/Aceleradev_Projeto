@@ -11,7 +11,7 @@ LEVEL_CHOICES = [
     ('debug', 'debug'),
     ('error', 'error'),
     ('warning', 'warning'),
-    ('information', 'info'),
+    ('info', 'info'),
 ]
 
 min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')

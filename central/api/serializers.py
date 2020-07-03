@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Agent, Event
+from api.models import Agent, Event
 from users.models import CustomUser, Group
 
 
+"""
 class UserSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField('get_token')
     class Meta:
@@ -13,19 +14,36 @@ class UserSerializer(serializers.ModelSerializer):
         token = token.key
         return token
 
-class AgentSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Agent
-            fields = '__all__'
 
 class GroupSerializer(serializers.ModelSerializer):
         class Meta:
             model = Group
             fields = '__all__'
+"""
 
-class EventSerializer(serializers.ModelSerializer):
+class AgentSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Agent
+            fields = '__all__'
+
+
+class EventViewSerializer(serializers.ModelSerializer):
     address = serializers.ReadOnlyField(source='agent.address')
     
     class Meta:
         model = Event
-        fields = ('level', 'data', 'arquivado', 'date', 'address', 'agent')
+        fields = '__all__'
+
+class EventDetailSerializer(serializers.ModelSerializer):
+    address = serializers.ReadOnlyField(source='agent.address')
+    
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+class EventSerializer(serializers.ModelSerializer):
+    address = serializers.ReadOnlyField(source='agent.address')
+
+    class Meta:
+        model = Event
+        fields = '__all__'

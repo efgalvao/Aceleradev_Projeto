@@ -2,6 +2,7 @@ from rest_framework import serializers
 from users.models import CustomUser
 from rest_framework.validators import UniqueValidator
 
+
 class CadastroSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,

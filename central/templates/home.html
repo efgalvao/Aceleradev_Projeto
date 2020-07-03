@@ -4,12 +4,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user }}!
-  {{ key }}
-  <p><a href="{% url 'users:logout' %}">logout</a></p>
+  Olá {{ user }}!
+    <p><a href="{% url 'rest_framework:logout' %}">logout</a></p>
 {% else %}
   <p>Você não está logado.</p>
-  <a href="{% url 'users:login' %}">Entrar</a>
+  <a href="{% url 'rest_framework:login' %}">Entrar</a>
   <a href="{% url 'users:cadastrar' %}">Cadastrar</a>
 {% endif %}
 {% endblock %}

@@ -56,7 +56,7 @@ class Event_details(generics.RetrieveAPIView):
     serializer_class = EventDetailSerializer
 
 
-class Agent_Create(generics.CreateAPIView):
+class Agent_Create(generics.ListCreateAPIView):
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
    #authentication_classes = [TokenAuthentication]
@@ -101,3 +101,14 @@ class Agent_List(generics.ListAPIView):
         serializer = AgentSerializer(queryset, many=True)
         return Response(serializer.data)
 """
+
+class Events_Agentsid(generics.RetrieveAPIView):
+    serializer_class = EventSerializer
+    
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases for
+        the user as determined by the username portion of the URL.
+        """
+        pk = self.kwargs['pk']
+        return Event.objects.filter(agent=pk)

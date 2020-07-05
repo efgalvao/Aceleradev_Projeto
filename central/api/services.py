@@ -28,3 +28,7 @@ def search_events_for_description(request, campo):# data é diferente de descrip
 def search_events_for_address(request, campo):
     queryset = Event.objects.filter(agent__address__search=campo)
     return queryset
+
+def get_all_events_by_agent(request, id):
+    queryset = Event.objects.filter(agent__id__filter=id)
+    return queryset

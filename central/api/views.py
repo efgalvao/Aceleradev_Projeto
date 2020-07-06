@@ -7,7 +7,6 @@ from .services import get_all_events
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-#teste cadastrar
 from rest_framework.views import APIView
 
 # Create your views here.
@@ -51,7 +50,7 @@ class EventAPI_objects(generics.ListCreateAPIView):
 
 
 class Event_details(generics.RetrieveAPIView):
-    lookup_field = "pk"
+    lookup_field = "id"
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
@@ -102,13 +101,21 @@ class Agent_List(generics.ListAPIView):
         return Response(serializer.data)
 """
 
-class Events_Agentsid(generics.RetrieveAPIView):
+class Events_Agentsid(generics.ListCreateAPIView):
     serializer_class = EventSerializer
     
-    def get_queryset(self):
-        """
-        This view should return a list of all the purchases for
-        the user as determined by the username portion of the URL.
-        """
-        pk = self.kwargs['pk']
-        return Event.objects.filter(agent=pk)
+    
+    def get_queryset(self, *args, **kwargs):
+        id = self.kwargs.get('agent_id')
+        return Event.objects.filter(agent_id=id)
+
+class Events_Groupid(generics.ListCreateAPIView):
+    serializer_class = EventSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        id = self.kwargs.get('group_id')
+        return Event.objects.filter(agent__user__group__id=id)
+
+
+
+    

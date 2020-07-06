@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Event
 
 
-def get_all_events():
+def get_all_events():# ok
     queryset = Event.objects.all()
     return queryset
 

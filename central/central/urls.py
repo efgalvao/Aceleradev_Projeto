@@ -19,13 +19,11 @@ from django.views.generic.base import TemplateView
 from rest_auth.views import LoginView
 from rest_framework.authtoken.views import obtain_auth_token
 
-
 urlpatterns = [
     #path('registration/', include('rest_auth.registration.urls')),
     path('get_token/', obtain_auth_token),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls', namespace="api")),
-    path('user/', include('users.urls', namespace="users")),
+    path('api/', include('api.urls')),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', include('rest_framework.urls', namespace='rest_framework'), name='login'),
 

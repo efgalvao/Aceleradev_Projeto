@@ -17,12 +17,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@9%b#11zufab8p7%_s81#g_jsm#*(&ic6yc$^sih1%drz+#(50'
+SECRET_KEY = '@-v+s@g^x!(hz@297cfqlerk(ij4z%sqn40tg@4tg$w5l_zj%7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,14 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 3rd    
+        # 3rd    
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
 
     # Mine
     'api',
-    'users',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +126,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'api.CustomUser'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'

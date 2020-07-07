@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from api.models import Agent, Event
-from users.models import CustomUser, Group
+from rest_framework.validators import UniqueValidator
+from api.models import Agent, Event, CustomUser, Group
 
 
 """
@@ -26,14 +26,6 @@ class AgentSerializer(serializers.ModelSerializer):
             model = Agent
             fields = '__all__'
 
-
-class EventViewSerializer(serializers.ModelSerializer):
-    address = serializers.ReadOnlyField(source='agent.address')
-    
-    class Meta:
-        model = Event
-        fields = '__all__'
-
 class EventDetailSerializer(serializers.ModelSerializer):
     address = serializers.ReadOnlyField(source='agent.address')
     
@@ -41,9 +33,30 @@ class EventDetailSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
-class EventSerializer(serializers.ModelSerializer):
+class EventListSerializer(serializers.ModelSerializer):
     address = serializers.ReadOnlyField(source='agent.address')
 
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ('level', 'description', 'address', 'date')
+
+class CadastroSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=CustomUser.objects.all())])
+    password = serializers.CharField(style={'input_type': 'password'})
+    
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def save(self):
+        user = CustomUser(
+                email=self.validated_data['email'],
+        )
+        password = self.validated_data['password']
+        user.set_password(password)
+        user.save()
+        return user
+        

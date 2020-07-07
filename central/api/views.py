@@ -15,8 +15,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken, APIView
 from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, ListCreateAPIView
-from rest_framework import generics
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework import generics, viewsets
 
 from .forms import CustomUserCreationForm
 from .models import Event, Agent, CustomUser, Group
@@ -25,17 +25,7 @@ from .serializers import CadastroSerializer
 from .services import get_all_events
 
 # Create your views here.
-
-class Event_list(ListCreateAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventListSerializer
-
-    
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
-    
-
-class Event_List(ListCreateAPIView):
+class Event_List(ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
    #authentication_classes = [TokenAuthentication]
@@ -45,13 +35,12 @@ class Event_List(ListCreateAPIView):
     def get_queryset(self, *args, **kwargs):
         return Event.objects.all()
 
-    """
-    Return a list of all users.
-    """
-        #events = [Event.data for Event in Event.objects.all()]
-        #return Response(events)
+class Event_Create(CreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventDetailSerializer
+
     def post(self, request):
-        serializer = EventSerializer(data=request.data)
+        serializer = EventDetailSerializer(data=request.data)
         data = {}
         if serializer.is_valid():
             event = serializer.save()
@@ -66,9 +55,10 @@ class Event_List(ListCreateAPIView):
             data = serializer.errors
         return Response(data)
 
-
-class Event_details(RetrieveAPIView):
-    lookup_field = "id"
+class Event_Detail(viewsets.ReadOnlyModelViewSet):
+    """
+    A simple ViewSet for viewing events.
+    """
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
@@ -112,7 +102,7 @@ class Agent_List(generics.ListAPIView):
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
     
-    """
+"""
     def get(self, request):
         queryset = Agent.objects.all()
         serializer = AgentSerializer(queryset, many=True)

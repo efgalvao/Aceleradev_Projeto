@@ -15,6 +15,7 @@ def order_events_by_level(request): # ok
     return queryset
 
 def order_events_by_frequency():# Frequencia baseada em que ?
+    queryset = Event.objects.order_by
     pass
 
 def search_events_for_level(request, campo):

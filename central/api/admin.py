@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Erro, User
+from .models import Event, User
 from .forms import UserCreationForm
-# Register your models here.
 
-admin.site.register(Erro)
+admin.site.register(Event)
 admin.site.register(User)
 
 

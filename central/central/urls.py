@@ -18,17 +18,17 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from rest_auth.views import LoginView
 from rest_framework.authtoken.views import obtain_auth_token
-from api.views import ErroViewSet, TesteViewSet
+from api.views import EventViewSet, TesteViewSet
 
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
-router.register(r'erro', ErroViewSet)
+router.register(r'event', EventViewSet)
 router.register(r'teste', TesteViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    #path('api/', include('api.urls')),
 
 ]
 """

@@ -1,6 +1,4 @@
 from django.db import models
-
-# Create your models here.
 from django.db.models.signals import post_save
 from django.core.validators import EmailValidator
 from django.core.validators import MinLengthValidator
@@ -10,29 +8,28 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import AbstractBaseUser
 from django.core.validators import validate_ipv4_address
 
 
 LEVEL_CHOICES = [
-    ('critical', 'critical'),
-    ('debug', 'debug'),
-    ('error', 'error'),
-    ('warning', 'warning'),
-    ('info', 'info'),
+    ('c', 'critical'),
+    ('d', 'debug'),
+    ('e', 'error'),
+    ('w', 'warning'),
+    ('i', 'info'),
 ]
 
 ENV_CHOICES = [
-    ('Produção', 'Prod'),
-    ('Dev', 'Devs'),
-    ('homologação', 'homologação')
+    ('p', 'Prod'),
+    ('d', 'Dev'),
+    ('h', 'homologação')
 ]
 min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')
 
 
 class UserManager(BaseUserManager):
     """
-    Custom user model manager where email is the unique identifiers
+    Custom user model manager where email is the unique identifier
     for authentication instead of usernames.
     """
     def create_user(self, email, password, **extra_fields):
@@ -63,6 +60,10 @@ class UserManager(BaseUserManager):
 
         
 class User(AbstractUser):
+    """
+    Custom user model where email is the unique identifier
+    for authentication instead of usernames.
+    """
     username = None
     name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(validators=[EmailValidator], unique=True)
@@ -80,7 +81,7 @@ class User(AbstractUser):
 
     objects = UserManager()
 
-class Erro(models.Model):
+class Event(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
     #user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField("description", max_length=150)
@@ -90,7 +91,7 @@ class Erro(models.Model):
     archived = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     env = models.CharField(max_length=20, choices=ENV_CHOICES)
-    freq = models.PositiveIntegerField(blank=True)
+    frequency = models.PositiveIntegerField(blank=True)
    
     def __str__(self):
         return self.level + ' in ' + self.address
@@ -98,10 +99,6 @@ class Erro(models.Model):
     class Meta:
         ordering = ['id']
     
-    #@property
-    #def frequency(self):
-    #    return Erro.objects.filter(description=self.description).count()
-
     def archive(self):
         self.archived = True
         self.save()

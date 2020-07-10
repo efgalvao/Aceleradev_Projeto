@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from api.models import Erro, User
+from api.models import Event, User
 
 class CadastroSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -22,19 +22,16 @@ class CadastroSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-class ErroDetailSerializer(serializers.ModelSerializer):
-    #freq = serializers.IntegerField(source='frequency')     
-    #frequency = serializers.IntegerField(read_only=True)
-
-    class Meta:
-        model = Erro
-        #fields = ('id', 'level', 'description', 'details', 'address', 'archived', 'date', 'env', 'frequency')
-        fields = '__all__'
-
-class ErroListSerializer(serializers.ModelSerializer):
+class EventDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Erro
+        model = Event
+        fields = '__all__'
+
+class EventListSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Event
         fields = ('level', 'description', 'address', 'date', 'freq')
 
 

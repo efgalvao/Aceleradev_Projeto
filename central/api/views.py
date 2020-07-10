@@ -1,32 +1,22 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.contrib.auth import authenticate
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.views import View
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import TemplateView
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
-from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.authtoken.views import ObtainAuthToken, APIView
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, ListCreateAPIView
+from rest_framework.authtoken.views import APIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, ListCreateAPIView
 from rest_framework import generics
 
-from .forms import UserCreationForm
-from .models import Event, User
+from .models import Event
 from .serializers import EventListSerializer, EventDetailSerializer
 from .serializers import CadastroSerializer
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from django.db.models import Count
-from rest_framework import filters
 
 
 

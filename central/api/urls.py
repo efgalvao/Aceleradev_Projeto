@@ -1,10 +1,7 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from rest_auth.views import LoginView
 from .views import Events_Search_description, Events_Search_address, Events_Search_level
-from .views import Cadastrar_View, User_list
-
-
+from .views import Cadastrar_View
 
 urlpatterns = [
         path('search/level/', Events_Search_level.as_view()),

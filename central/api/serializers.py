@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from api.models import Event, User
+from .models import Event, User
 
 class CadastroSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(

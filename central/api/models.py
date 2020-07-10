@@ -8,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-from django.core.validators import validate_ipv4_address
 
 
 LEVEL_CHOICES = [
@@ -83,7 +82,7 @@ class User(AbstractUser):
 
 class Event(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.CharField(max_length=50)
     description = models.CharField("description", max_length=150)
     details = models.TextField(max_length=500)
     address = models.CharField(max_length=39)

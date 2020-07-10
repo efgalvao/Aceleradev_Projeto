@@ -1,17 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Agent, Event, CustomUser, Group
-from .forms import CustomUserCreationForm
+from .models import Erro, User
+from .forms import UserCreationForm
 # Register your models here.
 
-admin.site.register(Agent)
-admin.site.register(Group)
-admin.site.register(Event)
-admin.site.register(CustomUser)
+admin.site.register(Erro)
+admin.site.register(User)
+
 
 class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    model = CustomUser
+    add_form = UserCreationForm
+    model = User
     list_display = ('email', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

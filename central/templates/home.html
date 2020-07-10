@@ -9,6 +9,6 @@
 {% else %}
   <p>Você não está logado.</p>
   <a href="{% url 'rest_framework:login' %}">Entrar</a>
-  <a href="{% url 'users:cadastrar' %}">Cadastrar</a>
+  <a href="{% url 'cadastrar' %}">Cadastrar</a>
 {% endif %}
 {% endblock %}

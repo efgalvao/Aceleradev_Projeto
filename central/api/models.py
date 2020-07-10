@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 from django.core.validators import validate_ipv4_address
 
 
@@ -22,18 +22,15 @@ LEVEL_CHOICES = [
     ('info', 'info'),
 ]
 
+ENV_CHOICES = [
+    ('Produção', 'Prod'),
+    ('Dev', 'Devs'),
+    ('homologação', 'homologação')
+]
 min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')
 
-class Group(models.Model):
-    name = models.CharField(max_length=20, blank=True)
 
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-class CustomUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
@@ -65,14 +62,13 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
         
-class CustomUser(AbstractUser):
+class User(AbstractUser):
     username = None
     name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(validators=[EmailValidator], unique=True)
     password = models.CharField(max_length=50, validators=[MinLengthValidator(8)])
     last_login = models.DateField(auto_now_add=True)
-    group = models.ManyToManyField(Group)
-    
+
     def __str__(self):
         return self.email
 
@@ -82,37 +78,33 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
+    objects = UserManager()
 
-class Agent(models.Model):
-    name = models.CharField(max_length=50)
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, null=True)
+class Erro(models.Model):
+    level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.CharField("description", max_length=150)
+    details = models.TextField(max_length=500)
     address = models.GenericIPAddressField(
         validators=[validate_ipv4_address], null=True)
-    status = models.BooleanField(default=False)
-    env = models.CharField(max_length=20)
-    version = models.CharField(max_length=5)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-
-class Event(models.Model):
-    level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
-    description = models.CharField(max_length=150)
-    data = models.TextField(max_length=500)
-    agent = models.ForeignKey(Agent, on_delete=models.PROTECT)
-    arquivado = models.BooleanField(default=False)
+    archived = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
-
+    env = models.CharField(max_length=20, choices=ENV_CHOICES)
+    freq = models.PositiveIntegerField(blank=True)
+   
     def __str__(self):
-        return self.level + ' in ' + self.agent.name
+        return self.level + ' in ' + self.address
 
     class Meta:
-        ordering = ['date']
+        ordering = ['id']
+    
+    #@property
+    #def frequency(self):
+    #    return Erro.objects.filter(description=self.description).count()
+
+    def archive(self):
+        self.archived = True
+        self.save()
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

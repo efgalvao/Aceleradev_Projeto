@@ -12,17 +12,17 @@ from django.core.validators import validate_ipv4_address
 
 
 LEVEL_CHOICES = [
-    ('c', 'critical'),
-    ('d', 'debug'),
-    ('e', 'error'),
-    ('w', 'warning'),
-    ('i', 'info'),
+    ('critical', 'critical'),
+    ('debug', 'debug'),
+    ('error', 'error'),
+    ('warning', 'warning'),
+    ('info', 'info'),
 ]
 
 ENV_CHOICES = [
-    ('p', 'Prod'),
-    ('d', 'Dev'),
-    ('h', 'homologação')
+    ('Produção', 'Produção'),
+    ('Dev', 'Dev'),
+    ('Homologação', 'Homologação')
 ]
 min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')
 
@@ -86,12 +86,11 @@ class Event(models.Model):
     #user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField("description", max_length=150)
     details = models.TextField(max_length=500)
-    address = models.GenericIPAddressField(
-        validators=[validate_ipv4_address], null=True)
+    address = models.CharField(max_length=39)
     archived = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     env = models.CharField(max_length=20, choices=ENV_CHOICES)
-    frequency = models.PositiveIntegerField(blank=True)
+    frequency = models.PositiveIntegerField(blank=True, null=True)
    
     def __str__(self):
         return self.level + ' in ' + self.address

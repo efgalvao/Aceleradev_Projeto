@@ -26,6 +26,8 @@ from .serializers import CadastroSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from django.db.models import Count
+from rest_framework import filters
+
 
 
 class EventViewSet(ModelViewSet):
@@ -33,7 +35,6 @@ class EventViewSet(ModelViewSet):
     #permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
-
 
     def list(self, request, *args, **kwargs):
         erros = Event.objects.all()
@@ -48,7 +49,7 @@ class EventViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=False)
     def homo(self, request, pk=None):        
-        erros = Event.objects.filter(env='homologação')
+        erros = Event.objects.filter(env='Homologação')
         serializer = EventDetailSerializer(erros, many=True)
         return Response(serializer.data)
     
@@ -69,34 +70,15 @@ class EventViewSet(ModelViewSet):
         erros = Event.objects.all()
         for erro in erros:
             frequencia = Event.objects.filter(description=erro.description).count()
-            setattr(erro, 'frequencia', frequencia)
+            setattr(erro, 'frequency', frequencia)
             erro.save()
-        erros = Event.objects.order_by('-frequencia')
+        erros = Event.objects.order_by('-frequency')
         serializer = EventDetailSerializer(erros, many=True)
         return Response(serializer.data)
-
-
-class TesteViewSet(ModelViewSet):
-    """
-    API endpoint that allows companies to be viewed or edited.
-    """
-    queryset = Event.objects.all()
-    serializer_class = EventDetailSerializer
-    serializer_action_classes = {
-        'list': EventDetailSerializer,
-    }
-    filterset_fields = ("level", "address", "description", )
-    search_fields = ("level", "description", "address" )
-    ordering_fields = ("level", "frequency", )
-    ordering = ("-level", )
-
-
 class Event_Details(RetrieveAPIView):
     lookup_field = "id"
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
-
-
 
 class Events_Agentsid(ListCreateAPIView):
     serializer_class = EventListSerializer
@@ -113,13 +95,6 @@ class Events_By_Groupid(ListCreateAPIView):
         return Event.objects.filter(env=id)
 
 from rest_framework import filters
-
-class Events_Ordered_by_Level(ListCreateAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventListSerializer
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['level']
-    ordering = ['level']
 
 class DynamicSearchFilter(filters.SearchFilter):
     def get_search_fields(self, view, request):

@@ -18,22 +18,25 @@ from django.urls import path, include
 from django.views.generic.base import TemplateView
 from rest_auth.views import LoginView
 from rest_framework.authtoken.views import obtain_auth_token
-from api.views import EventViewSet, TesteViewSet
+from api.views import EventViewSet
 
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'event', EventViewSet)
-router.register(r'teste', TesteViewSet)
+#router.register(r'teste', TesteViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    #path('api/', include('api.urls')),
+    path('api/', include('api.urls')),
+    path('login/', obtain_auth_token),
+    
+
 
 ]
 """
 urlpatterns = [
-    #path('registration/', include('rest_auth.registration.urls')),
+    path('registration/', include('rest_auth.registration.urls')),
     path('get_token/', obtain_auth_token),
     path('admin/', admin.site.urls),
     #path('api/', include('api.urls')),

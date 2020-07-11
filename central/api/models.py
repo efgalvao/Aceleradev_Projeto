@@ -9,20 +9,19 @@ from django.conf import settings
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
-
 LEVEL_CHOICES = [
-    ('critical', 'critical'),
-    ('debug', 'debug'),
-    ('error', 'error'),
-    ('warning', 'warning'),
-    ('info', 'info'),
-]
+        ('critical', 'critical'),
+        ('debug', 'debug'),
+        ('error', 'error'),
+        ('warning', 'warning'),
+        ('info', 'info'),
+        ]
 
 ENV_CHOICES = [
-    ('Produção', 'Produção'),
-    ('Dev', 'Dev'),
-    ('Homologação', 'Homologação')
-]
+        ('Produção', 'Produção'),
+        ('Dev', 'Dev'),
+        ('Homologação', 'Homologação')
+        ]
 min_validator = MinLengthValidator(8, 'The password cant be smaller than 8')
 
 
@@ -31,6 +30,7 @@ class UserManager(BaseUserManager):
     Custom user model manager where email is the unique identifier
     for authentication instead of usernames.
     """
+
     def create_user(self, email, password, **extra_fields):
         """
         Create and save a User with the given email and password.
@@ -57,7 +57,7 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
 
-        
+
 class User(AbstractUser):
     """
     Custom user model where email is the unique identifier
@@ -80,6 +80,7 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+
 class Event(models.Model):
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
     user = models.CharField(max_length=50)
@@ -90,20 +91,19 @@ class Event(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     env = models.CharField(max_length=20, choices=ENV_CHOICES)
     frequency = models.PositiveIntegerField(blank=True, null=True)
-   
+
     def __str__(self):
         return self.level + ' in ' + self.address
 
     class Meta:
         ordering = ['id']
-    
+
     def archive(self):
         self.archived = True
         self.save()
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
-        
-        

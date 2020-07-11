@@ -15,31 +15,42 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from rest_framework.authtoken.views import obtain_auth_token
-from ..api import views
-
+from api.views import EventViewSet, Register_View
 from rest_framework.routers import DefaultRouter
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
 router = DefaultRouter()
-router.register(r'event', views.EventViewSet, "Events")
+router.register(r'event', EventViewSet, basename="Events")
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Central de Erros API",
+      default_version='v1',
+      description="API for manage error logs saved in DB",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="efgalvao@mail.com"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('login/', obtain_auth_token),
-    
+        path('', include(router.urls)),
+        path('admin/', admin.site.urls),
+        path('api/', include('api.urls')),
+        path('register/', Register_View.as_view(), name='register'),
+        path('get_token/', obtain_auth_token),
+        url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),
+            name='schema-json'),
+        url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
+                                     name='schema-swagger-ui'),
+        url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
-
-]
-"""
-urlpatterns = [
-    path('registration/', include('rest_auth.registration.urls')),
-    path('get_token/', obtain_auth_token),
-    path('admin/', admin.site.urls),
-    #path('api/', include('api.urls')),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('', include('rest_framework.urls', namespace='rest_framework'), name='login'),
-
-          
-]
-"""
+        ]

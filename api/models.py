@@ -66,7 +66,7 @@ class User(AbstractUser):
     username = None
     name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(validators=[EmailValidator], unique=True)
-    password = models.CharField(max_length=50, validators=[MinLengthValidator(8)])
+    password = models.CharField(max_length=100, validators=[MinLengthValidator(8)])
     last_login = models.DateField(auto_now_add=True)
 
     def __str__(self):

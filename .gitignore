@@ -7,7 +7,6 @@ env.py
 .idea/
 .vscode/
 venv/
-migrations/
 __pycache__/
 .installed.cfg
 bin

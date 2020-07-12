@@ -7,22 +7,35 @@ from rest_framework import generics, filters
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from .models import Event
-from .serializers import EventListSerializer, EventDetailSerializer
+from .serializers import EventListSerializer, EventDetailSerializer, EventCreateSerializer
 from .serializers import RegisterSerializer
 
 
 class EventViewSet(ModelViewSet):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+    #permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
+    
+    def create(self, request, *args, **kwargs):
+        serializer = EventCreateSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            event = serializer.save()
+        erros = Event.objects.all()
+        for erro in erros:
+            frequencia = Event.objects.filter(description=erro.description).count()
+            setattr(erro, 'frequency', frequencia)
+            erro.save()
+        return Response(serializer.data)
+    
     def list(self, request, *args, **kwargs):
         erros = Event.objects.all()
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=False, url_path='dev', )
+    @action(methods=['get'], detail=False )
     def dev(self, request, pk=None):
         erros = Event.objects.filter(env='Dev')
         serializer = EventListSerializer(erros, many=True)
@@ -49,10 +62,6 @@ class EventViewSet(ModelViewSet):
     @action(methods=['get'], detail=False)
     def order_freq(self, request, pk=None):
         erros = Event.objects.all()
-        for erro in erros:
-            frequencia = Event.objects.filter(description=erro.description).count()
-            setattr(erro, 'frequency', frequencia)
-            erro.save()
         erros = Event.objects.order_by('-frequency')
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)

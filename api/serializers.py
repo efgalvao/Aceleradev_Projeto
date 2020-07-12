@@ -21,7 +21,19 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+class EventCreateSerializer(serializers.ModelSerializer):
+    frequency = serializers.IntegerField(read_only=True)
+
+
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+    
 class EventDetailSerializer(serializers.ModelSerializer):
+    frequency = serializers.IntegerField(read_only=True)
+
+
     class Meta:
         model = Event
         fields = '__all__'

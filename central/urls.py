@@ -45,7 +45,7 @@ urlpatterns = [
         path('', include(router.urls)),
         path('admin/', admin.site.urls),
         path('api/', include('api.urls')),
-        path('register/', Register_View.as_view(), name='register'),
+        path('register/', Register_View.as_view()),
         path('get_token/', obtain_auth_token),
         url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0),
             name='schema-json'),

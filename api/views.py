@@ -15,8 +15,8 @@ class EventViewSet(ModelViewSet):
     """
         Viewset for Events
     """    
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
@@ -95,8 +95,8 @@ class Events_Search_level(generics.ListAPIView):
     """
         Class used to search events in the "level" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
     filter_backends = [filters.SearchFilter]
@@ -119,8 +119,8 @@ class Events_Search_address(generics.ListAPIView):
     """
         Class used to search events in the "address" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
     filter_backends = [filters.SearchFilter]

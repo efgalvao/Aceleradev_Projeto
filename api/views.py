@@ -12,13 +12,19 @@ from .serializers import RegisterSerializer
 
 
 class EventViewSet(ModelViewSet):
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    """
+        Viewset for Events
+    """    
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
     
     def create(self, request, *args, **kwargs):
+        """
+            Method for creation of events 
+        """
         serializer = EventCreateSerializer(data=request.data)
         data = {}
         if serializer.is_valid():
@@ -31,36 +37,54 @@ class EventViewSet(ModelViewSet):
         return Response(serializer.data)
     
     def list(self, request, *args, **kwargs):
+        """
+        Method for listing events 
+        """
         erros = Event.objects.all()
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
 
     @action(methods=['get'], detail=False )
     def dev(self, request, pk=None):
+        """
+        Method used to filter events by the env "Dev"
+        """
         erros = Event.objects.filter(env='Dev')
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
     def homo(self, request, pk=None):
+        """
+            Method used to filter events by the env "Homologação"
+        """
         erros = Event.objects.filter(env='Homologação')
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
     def prod(self, request, pk=None):
+        """
+            Method used to filter events by the env "Produção"
+        """
         erros = Event.objects.filter(env='Produção')
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
     def order_level(self, request, pk=None):
+        """
+            Method used to order the events by "level"
+        """
         erros = Event.objects.order_by('level')
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
 
     @action(methods=['get'], detail=False)
     def order_freq(self, request, pk=None):
+        """
+            Method used to order the events by "frequency"
+        """
         erros = Event.objects.all()
         erros = Event.objects.order_by('-frequency')
         serializer = EventListSerializer(erros, many=True)
@@ -68,6 +92,9 @@ class EventViewSet(ModelViewSet):
 
 
 class Events_Search_level(generics.ListAPIView):
+    """
+        Class used to search events in the "level" attribute
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
@@ -77,6 +104,9 @@ class Events_Search_level(generics.ListAPIView):
 
 
 class Events_Search_description(generics.ListAPIView):
+    """
+        Class used to search events in the "description" attribute
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
@@ -86,6 +116,9 @@ class Events_Search_description(generics.ListAPIView):
 
 
 class Events_Search_address(generics.ListAPIView):
+    """
+        Class used to search events in the "address" attribute
+    """
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
@@ -95,6 +128,9 @@ class Events_Search_address(generics.ListAPIView):
 
 
 class Register_View(CreateAPIView):
+    """
+        Class used to register user
+    """
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
 

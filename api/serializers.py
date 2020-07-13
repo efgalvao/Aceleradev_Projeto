@@ -4,6 +4,9 @@ from .models import Event, User
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+        Serializer for user register
+    """
     email = serializers.EmailField(required=True,
             validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(style={'input_type': 'password'})
@@ -22,6 +25,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class EventCreateSerializer(serializers.ModelSerializer):
+    """
+        Serializer for Event creation
+    """
     frequency = serializers.IntegerField(read_only=True)
 
 
@@ -31,6 +37,9 @@ class EventCreateSerializer(serializers.ModelSerializer):
 
     
 class EventDetailSerializer(serializers.ModelSerializer):
+    """
+        Serializer for Event details
+    """
     frequency = serializers.IntegerField(read_only=True)
 
 
@@ -40,6 +49,9 @@ class EventDetailSerializer(serializers.ModelSerializer):
 
 
 class EventListSerializer(serializers.ModelSerializer):
+    """
+        Serializer for Event list
+    """
     class Meta:
         model = Event
         fields = ('level', 'description', 'address', 'date', 'frequency')

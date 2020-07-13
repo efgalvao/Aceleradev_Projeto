@@ -1,3 +1,6 @@
+"""
+    Models for the API app
+"""
 from django.db import models
 from django.db.models.signals import post_save
 from django.core.validators import EmailValidator
@@ -82,6 +85,9 @@ class User(AbstractUser):
 
 
 class Event(models.Model):
+    """
+    Custom event model for event creation 
+    """
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES)
     user = models.CharField(max_length=50)
     description = models.CharField("description", max_length=150)

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from rest_framework.authtoken.views import obtain_auth_token
-from api.views import EventViewSet, Register_View
+from api.views import EventViewSet, Register_View, Filter, Level, Freq
 from rest_framework.routers import DefaultRouter
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -52,5 +52,9 @@ urlpatterns = [
         url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
                                      name='schema-swagger-ui'),
         url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+        url('^event/(?P<env>.+)/$', Filter.as_view()),
+        url('^event/level', Level.as_view()),
+        url('^event/freq', Freq.as_view()),
+
 
         ]

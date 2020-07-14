@@ -79,68 +79,6 @@ class EventViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-    @action(methods=['get'], detail=False )
-    def dev(self, request, pk=None):
-        """
-        Method used to filter events by the env "Dev"
-        """
-        freq_update()
-        paginacao = PageNumberPagination()
-        erros = Event.objects.filter(env='Dev')
-        resultado = paginacao.paginate_queryset(erros, request)
-        serializer = EventListSerializer(resultado, many=True)
-        return paginacao.get_paginated_response(serializer.data)
-        
-
-    @action(methods=['get'], detail=False)
-    def homo(self, request, pk=None):
-        """
-            Method used to filter events by the env "Homologação"
-        """
-        freq_update()
-        paginacao = PageNumberPagination()
-        erros = Event.objects.filter(env='Homologação')
-        resultado = paginacao.paginate_queryset(erros, request)
-        serializer = EventListSerializer(resultado, many=True)
-        return paginacao.get_paginated_response(serializer.data)
-
-    @action(methods=['get'], detail=False)
-    def prod(self, request, pk=None):
-        """
-            Method used to filter events by the env "Produção"
-        """
-        freq_update()
-        paginacao = PageNumberPagination()
-        erros = Event.objects.filter(env='Produção')
-        resultado = paginacao.paginate_queryset(erros, request)
-        serializer = EventListSerializer(resultado, many=True)
-        return paginacao.get_paginated_response(serializer.data)
-
-    @action(methods=['get'], detail=False)
-    def order_level(self, request, pk=None):
-        """
-            Method used to order the events by "level"
-        """
-        freq_update()
-        paginacao = PageNumberPagination()
-        erros = Event.objects.order_by('level')
-        resultado = paginacao.paginate_queryset(erros, request)
-        serializer = EventListSerializer(resultado, many=True)
-        return paginacao.get_paginated_response(serializer.data)
-
-    @action(methods=['get'], detail=False)
-    def order_freq(self, request, pk=None):
-        """
-            Method used to order the events by "frequency"
-        """
-        freq_update()
-        paginacao = PageNumberPagination()
-        erros = Event.objects.order_by('-frequency')
-        resultado = paginacao.paginate_queryset(erros, request)
-        serializer = EventListSerializer(resultado, many=True)
-        return paginacao.get_paginated_response(serializer.data)
-
-
 class Events_Search_level(generics.ListAPIView):
     """
         Class used to search events in the "level" attribute
@@ -196,3 +134,43 @@ class Register_View(CreateAPIView):
         else:
             data = serializer.errors
         return Response(data)
+
+class Filter(generics.ListAPIView):
+    serializer_class = EventListSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of events filtered by the environment 
+        as determined by the env portion of the URL.
+        """
+        env = self.kwargs['env']
+        return Event.objects.filter(env=env)
+
+class Level(generics.ListAPIView):
+    serializer_class = EventListSerializer
+
+    def get(self, request):
+        """
+        This view should return a list of all events ordered by level.
+        """
+        freq_update()
+        paginacao = PageNumberPagination()
+        erros = Event.objects.order_by('level')
+        resultado = paginacao.paginate_queryset(erros, request)
+        serializer = EventListSerializer(resultado, many=True)
+        return paginacao.get_paginated_response(serializer.data)
+
+
+class Freq(generics.ListAPIView):
+    serializer_class = EventListSerializer
+
+    def get(self, request):
+        """
+        This view should return a list of all events ordered by frequency.
+        """
+        freq_update()
+        paginacao = PageNumberPagination()
+        erros = Event.objects.order_by('-frequency')
+        resultado = paginacao.paginate_queryset(erros, request)
+        serializer = EventListSerializer(resultado, many=True)
+        return paginacao.get_paginated_response(serializer.data)

@@ -4,16 +4,10 @@ python:
 
 
 stages:
-  - name: migrate
   - name: test
 
 jobs:
   include:
-    - stage: migrate
-      name: Migration
-      script: python manage.py makemigrations
-      script: python manage.py migrate
-
     - stage: test
       name: Unit Tests
       script: python manage.py test

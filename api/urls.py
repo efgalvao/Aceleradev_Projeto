@@ -1,8 +1,6 @@
 from django.urls import path
-from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from .views import Events_Search_description, Events_Search_address, Events_Search_level
-from .views import Register_View
 
 urlpatterns = [
         path('search/level/', Events_Search_level.as_view()),

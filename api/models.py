@@ -92,7 +92,7 @@ class Event(models.Model):
     user = models.CharField(max_length=50)
     description = models.CharField("description", max_length=150)
     details = models.TextField(max_length=500)
-    address = models.CharField(max_length=39)
+    address = models.CharField(max_length=100)
     archived = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     env = models.CharField(max_length=20, choices=ENV_CHOICES)

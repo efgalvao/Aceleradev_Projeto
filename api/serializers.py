@@ -29,7 +29,7 @@ class EventCreateSerializer(serializers.ModelSerializer):
         Serializer for Event creation
     """
     frequency = serializers.IntegerField(read_only=True)
-
+    address = serializers.CharField(max_length=100)
 
     class Meta:
         model = Event
@@ -54,4 +54,4 @@ class EventListSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Event
-        fields = ('level', 'description', 'address', 'date', 'frequency')
+        fields = ('id', 'level', 'description', 'address', 'date', 'env', 'frequency')

@@ -29,12 +29,15 @@ class EventViewSet(ModelViewSet):
         data = {}
         if serializer.is_valid():
             event = serializer.save()
+            data['response'] = "Evento criado com sucesso"
+        else:
+            data = serializer.errors
         erros = Event.objects.all()
         for erro in erros:
             frequencia = Event.objects.filter(description=erro.description).count()
             setattr(erro, 'frequency', frequencia)
             erro.save()
-        return Response(serializer.data)
+        return Response(data)
     
     def list(self, request, *args, **kwargs):
         """
@@ -43,6 +46,21 @@ class EventViewSet(ModelViewSet):
         erros = Event.objects.all()
         serializer = EventListSerializer(erros, many=True)
         return Response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        erro = Event.objects.get(id=pk)
+        return Response("Evento deletado")
+
+    def update(self, request, pk=None):
+        erro = Event.objects.get(id=pk)
+        serializer = EventCreateSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            event = serializer.save()
+            data['response'] = "Evento criado com sucesso"
+        else:
+            data = serializer.errors
+        return
 
     @action(methods=['get'], detail=False )
     def dev(self, request, pk=None):
@@ -140,9 +158,9 @@ class Register_View(CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             data['response'] = "Usuário criado com sucesso"
-            data['email'] = user.email
-            token = Token.objects.get(user=user).key
-            data['token'] = token
+            #data['email'] = user.email
+            #token = Token.objects.get(user=user).key
+            #data['token'] = token
         else:
             data = serializer.errors
         return Response(data)

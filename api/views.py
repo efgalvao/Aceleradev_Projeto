@@ -15,8 +15,8 @@ class EventViewSet(ModelViewSet):
     """
         Viewset for Events
     """    
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
@@ -49,7 +49,8 @@ class EventViewSet(ModelViewSet):
 
     def destroy(self, request, pk=None):
         erro = Event.objects.get(id=pk)
-        return Response("Evento deletado")
+        erro.delete()
+        return Response("Evento removido")
 
     def update(self, request, pk=None):
         erro = Event.objects.get(id=pk)
@@ -57,10 +58,18 @@ class EventViewSet(ModelViewSet):
         data = {}
         if serializer.is_valid():
             event = serializer.save()
-            data['response'] = "Evento criado com sucesso"
+            data['response'] = "Evento alterado com sucesso"
         else:
             data = serializer.errors
-        return
+        return Response(data)
+
+    def partial_update(self, request, pk=None):
+        event = Event.objects.get(id=pk)
+        serializer = EventCreateSerializer(event, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 
     @action(methods=['get'], detail=False )
     def dev(self, request, pk=None):
@@ -113,8 +122,8 @@ class Events_Search_level(generics.ListAPIView):
     """
         Class used to search events in the "level" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
     filter_backends = [filters.SearchFilter]
@@ -125,8 +134,8 @@ class Events_Search_description(generics.ListAPIView):
     """
         Class used to search events in the "description" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
     filter_backends = [filters.SearchFilter]
@@ -137,8 +146,8 @@ class Events_Search_address(generics.ListAPIView):
     """
         Class used to search events in the "address" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
     filter_backends = [filters.SearchFilter]
@@ -158,9 +167,6 @@ class Register_View(CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             data['response'] = "Usuário criado com sucesso"
-            #data['email'] = user.email
-            #token = Token.objects.get(user=user).key
-            #data['token'] = token
         else:
             data = serializer.errors
         return Response(data)

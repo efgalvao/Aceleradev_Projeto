@@ -11,7 +11,7 @@ jobs:
     - stage: test
       name: Unit Tests
       script: 
-        - python manage.py makemigrations
+        -  python manage.py makemigrations
         -  python manage.py migrate
         -  python manage.py test api
 

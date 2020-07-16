@@ -1,1 +1,615 @@
-{"swagger": "2.0", "info": {"title": "Central de Erros API", "description": "API for manage error logs saved in DB", "termsOfService": "https://www.google.com/policies/terms/", "contact": {"email": "efgalvao@mail.com"}, "license": {"name": "BSD License"}, "version": "v1"}, "host": "127.0.0.1:8000", "schemes": ["http"], "basePath": "/", "consumes": ["application/json"], "produces": ["application/json"], "securityDefinitions": {"Basic": {"type": "basic"}}, "security": [{"Basic": []}], "paths": {"/api/search/address/": {"get": {"operationId": "api_search_address_list", "description": "Class used to search events in the \"address\" attribute", "parameters": [{"name": "search", "in": "query", "description": "A search term.", "required": false, "type": "string"}], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventList"}}}}, "tags": ["api"]}, "parameters": []}, "/api/search/address{format}": {"get": {"operationId": "api_search_read", "description": "Class used to search events in the \"address\" attribute", "parameters": [{"name": "search", "in": "query", "description": "A search term.", "required": false, "type": "string"}], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventList"}}}}, "tags": ["api"]}, "parameters": [{"name": "format", "in": "path", "required": true, "type": "string"}]}, "/api/search/desc/": {"get": {"operationId": "api_search_desc_list", "description": "Class used to search events in the \"description\" attribute", "parameters": [{"name": "search", "in": "query", "description": "A search term.", "required": false, "type": "string"}], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventList"}}}}, "tags": ["api"]}, "parameters": []}, "/api/search/desc{format}": {"get": {"operationId": "api_search_read", "description": "Class used to search events in the \"description\" attribute", "parameters": [{"name": "search", "in": "query", "description": "A search term.", "required": false, "type": "string"}], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventList"}}}}, "tags": ["api"]}, "parameters": [{"name": "format", "in": "path", "required": true, "type": "string"}]}, "/api/search/level/": {"get": {"operationId": "api_search_level_list", "description": "Class used to search events in the \"level\" attribute", "parameters": [{"name": "search", "in": "query", "description": "A search term.", "required": false, "type": "string"}], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventList"}}}}, "tags": ["api"]}, "parameters": []}, "/api/search/level{format}": {"get": {"operationId": "api_search_read", "description": "Class used to search events in the \"level\" attribute", "parameters": [{"name": "search", "in": "query", "description": "A search term.", "required": false, "type": "string"}], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventList"}}}}, "tags": ["api"]}, "parameters": [{"name": "format", "in": "path", "required": true, "type": "string"}]}, "/event/": {"get": {"operationId": "event_list", "description": "Method for listing events", "parameters": [], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventDetail"}}}}, "tags": ["event"]}, "post": {"operationId": "event_create", "description": "Method for creation of events", "parameters": [{"name": "data", "in": "body", "required": true, "schema": {"$ref": "#/definitions/EventDetail"}}], "responses": {"201": {"description": "", "schema": {"$ref": "#/definitions/EventDetail"}}}, "tags": ["event"]}, "parameters": []}, "/event/dev/": {"get": {"operationId": "event_dev", "description": "Method used to filter events by the env \"Dev\"", "parameters": [], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventDetail"}}}}, "tags": ["event"]}, "parameters": []}, "/event/homo/": {"get": {"operationId": "event_homo", "description": "Method used to filter events by the env \"Homologa\u00e7\u00e3o\"", "parameters": [], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventDetail"}}}}, "tags": ["event"]}, "parameters": []}, "/event/order_freq/": {"get": {"operationId": "event_order_freq", "description": "Method used to order the events by \"frequency\"", "parameters": [], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventDetail"}}}}, "tags": ["event"]}, "parameters": []}, "/event/order_level/": {"get": {"operationId": "event_order_level", "description": "Method used to order the events by \"level\"", "parameters": [], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventDetail"}}}}, "tags": ["event"]}, "parameters": []}, "/event/prod/": {"get": {"operationId": "event_prod", "description": "Method used to filter events by the env \"Produ\u00e7\u00e3o\"", "parameters": [], "responses": {"200": {"description": "", "schema": {"type": "array", "items": {"$ref": "#/definitions/EventDetail"}}}}, "tags": ["event"]}, "parameters": []}, "/event/{id}/": {"get": {"operationId": "event_read", "description": "Viewset for Events", "parameters": [], "responses": {"200": {"description": "", "schema": {"$ref": "#/definitions/EventDetail"}}}, "tags": ["event"]}, "put": {"operationId": "event_update", "description": "Viewset for Events", "parameters": [{"name": "data", "in": "body", "required": true, "schema": {"$ref": "#/definitions/EventDetail"}}], "responses": {"200": {"description": "", "schema": {"$ref": "#/definitions/EventDetail"}}}, "tags": ["event"]}, "patch": {"operationId": "event_partial_update", "description": "Viewset for Events", "parameters": [{"name": "data", "in": "body", "required": true, "schema": {"$ref": "#/definitions/EventDetail"}}], "responses": {"200": {"description": "", "schema": {"$ref": "#/definitions/EventDetail"}}}, "tags": ["event"]}, "delete": {"operationId": "event_delete", "description": "Viewset for Events", "parameters": [], "responses": {"204": {"description": ""}}, "tags": ["event"]}, "parameters": [{"name": "id", "in": "path", "description": "A unique integer value identifying this event.", "required": true, "type": "integer"}]}, "/get_token/": {"post": {"operationId": "get_token_create", "description": "", "parameters": [], "responses": {"201": {"description": ""}}, "tags": ["get_token"]}, "parameters": []}, "/register/": {"post": {"operationId": "register_create", "description": "Class used to register user", "parameters": [{"name": "data", "in": "body", "required": true, "schema": {"$ref": "#/definitions/Register"}}], "responses": {"201": {"description": "", "schema": {"$ref": "#/definitions/Register"}}}, "tags": ["register"]}, "parameters": []}}, "definitions": {"EventList": {"required": ["level", "description", "address"], "type": "object", "properties": {"level": {"title": "Level", "type": "string", "enum": ["critical", "debug", "error", "warning", "info"]}, "description": {"title": "Description", "type": "string", "maxLength": 150, "minLength": 1}, "address": {"title": "Address", "type": "string", "maxLength": 39, "minLength": 1}, "date": {"title": "Date", "type": "string", "format": "date-time", "readOnly": true}, "frequency": {"title": "Frequency", "type": "integer", "x-nullable": true}}}, "EventDetail": {"required": ["level", "user", "description", "details", "address", "env"], "type": "object", "properties": {"id": {"title": "ID", "type": "integer", "readOnly": true}, "frequency": {"title": "Frequency", "type": "integer", "readOnly": true}, "level": {"title": "Level", "type": "string", "enum": ["critical", "debug", "error", "warning", "info"]}, "user": {"title": "User", "type": "string", "maxLength": 50, "minLength": 1}, "description": {"title": "Description", "type": "string", "maxLength": 150, "minLength": 1}, "details": {"title": "Details", "type": "string", "maxLength": 500, "minLength": 1}, "address": {"title": "Address", "type": "string", "maxLength": 39, "minLength": 1}, "archived": {"title": "Archived", "type": "boolean"}, "date": {"title": "Date", "type": "string", "format": "date-time", "readOnly": true}, "env": {"title": "Env", "type": "string", "enum": ["Produ\u00e7\u00e3o", "Dev", "Homologa\u00e7\u00e3o"]}}}, "Register": {"required": ["email", "password"], "type": "object", "properties": {"email": {"title": "Email", "type": "string", "format": "email", "minLength": 1}, "password": {"title": "Password", "type": "string", "minLength": 1}}}}}
+#%RAML 1.0
+securedBy:
+  - Token
+title: Central de Erros API
+description: API for manage error logs saved in DB
+version: v1
+(oas-info):
+  termsOfService: 'https://www.google.com/policies/terms/'
+  contact:
+    email: efgalvao@mail.com
+  license:
+    name: BSD License
+annotationTypes:
+  oas-info:
+    properties:
+      termsOfService?: string
+      contact?:
+        properties:
+          name?: string
+          url?: string
+          email?: string
+      license?:
+        properties:
+          name?: string
+          url?: string
+    allowedTargets: API
+  oas-schema-title:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-readOnly:
+    type: boolean
+    allowedTargets: TypeDeclaration
+  nullable: any
+  oas-format:
+    type: string
+    allowedTargets: TypeDeclaration
+  oas-tags:
+    type: 'string[]'
+    allowedTargets: Method
+  oas-body-name:
+    type: string
+    allowedTargets: TypeDeclaration
+mediaType: application/json
+protocols:
+  - HTTPS
+baseUri: 'http://127.0.0.1:8000/'
+securitySchemes:
+  Token:
+    type: Token Bearer
+types:
+  EventList:
+    type: object
+    properties:
+      id:
+        type: integer
+        (oas-schema-title): ID
+        (oas-readOnly): true
+        required: false
+      level:
+        type: string
+        enum:
+          - critical
+          - debug
+          - error
+          - warning
+          - info
+        (oas-schema-title): Level
+      description:
+        maxLength: 150
+        minLength: 1
+        type: string
+        (oas-schema-title): Description
+      address:
+        maxLength: 100
+        minLength: 1
+        type: string
+        (oas-schema-title): Address
+      date:
+        type: datetime
+        (oas-schema-title): Date
+        (oas-readOnly): true
+        required: false
+      env:
+        type: string
+        enum:
+          - Produção
+          - Dev
+          - Homologação
+        (oas-schema-title): Env
+      frequency:
+        type: integer
+        (oas-schema-title): Frequency
+        (nullable): true
+        required: false
+  EventDetail:
+    type: object
+    properties:
+      id:
+        type: integer
+        (oas-schema-title): ID
+        (oas-readOnly): true
+        required: false
+      frequency:
+        type: integer
+        (oas-schema-title): Frequency
+        (oas-readOnly): true
+        required: false
+      level:
+        type: string
+        enum:
+          - critical
+          - debug
+          - error
+          - warning
+          - info
+        (oas-schema-title): Level
+      user:
+        maxLength: 50
+        minLength: 1
+        type: string
+        (oas-schema-title): User
+      description:
+        maxLength: 150
+        minLength: 1
+        type: string
+        (oas-schema-title): Description
+      details:
+        maxLength: 500
+        minLength: 1
+        type: string
+        (oas-schema-title): Details
+      address:
+        maxLength: 100
+        minLength: 1
+        type: string
+        (oas-schema-title): Address
+      archived:
+        type: boolean
+        (oas-schema-title): Archived
+        required: false
+      date:
+        type: datetime
+        (oas-schema-title): Date
+        (oas-readOnly): true
+        required: false
+      env:
+        type: string
+        enum:
+          - Produção
+          - Dev
+          - Homologação
+        (oas-schema-title): Env
+  Register:
+    type: object
+    properties:
+      email:
+        minLength: 1
+        type: string
+        (oas-format): email
+        (oas-schema-title): Email
+      password:
+        minLength: 1
+        type: string
+        (oas-schema-title): Password
+/event:
+  get:
+    description: Method for listing events
+    displayName: event_list
+    responses:
+      '200':
+        body:
+          application/json:
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                (oas-format): uri
+                (nullable): true
+                required: false
+              previous:
+                type: string
+                (oas-format): uri
+                (nullable): true
+                required: false
+              results:
+                type: array
+                items:
+                  type: EventDetail
+    queryParameters:
+      page:
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+    (oas-tags):
+      - event
+  post:
+    description: Method for creation of events
+    displayName: event_create
+    responses:
+      '201':
+        body:
+          application/json:
+            type: EventDetail
+    body:
+      application/json:
+        type: EventDetail
+        (oas-body-name): data
+    (oas-tags):
+      - event
+  /freq:
+    get:
+      description: This view should return a list of all events ordered by frequency.
+      displayName: event_freq_list
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - event
+  /level:
+    get:
+      description: This view should return a list of all events ordered by level.
+      displayName: event_level_list
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - event
+  '/{env}':
+    get:
+      displayName: event_read
+      responses:
+          '200':
+          body:
+              application/json:
+              type: object
+              properties:
+                  count:
+                  type: integer
+                  next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                  previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                  results:
+                  type: array
+                  items:
+                      type: EventList
+      queryParameters:
+          page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+          - event
+    uriParameters:
+      env:
+      type: string
+  '/{id}':
+    get:
+      description: Viewset for Events
+      displayName: event_read
+      responses:
+        '200':
+          body:
+            application/json:
+              type: EventDetail
+      (oas-tags):
+        - event
+    put:
+      description: Viewset for Events
+      displayName: event_update
+      responses:
+        '200':
+          body:
+            application/json:
+              type: EventDetail
+      body:
+        application/json:
+          type: EventDetail
+          (oas-body-name): data
+      (oas-tags):
+        - event
+    patch:
+      description: Viewset for Events
+      displayName: event_partial_update
+      responses:
+        '200':
+          body:
+            application/json:
+              type: EventDetail
+      body:
+        application/json:
+          type: EventDetail
+          (oas-body-name): data
+      (oas-tags):
+        - event
+    delete:
+      description: Viewset for Events
+      displayName: event_delete
+      responses:
+        '204': {}
+      (oas-tags):
+        - event
+    uriParameters:
+      id:
+        description: A unique integer value identifying this event.
+        type: integer
+/api/search:
+  get:
+    description: Endpoint used to search events in the "address" attribute
+    displayName: api_search_read
+    responses:
+      '200':
+        body:
+          application/json:
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                (oas-format): uri
+                (nullable): true
+                required: false
+              previous:
+                type: string
+                (oas-format): uri
+                (nullable): true
+                required: false
+              results:
+                type: array
+                items:
+                  type: EventList
+    queryParameters:
+      search:
+        description: A search term.
+        required: false
+        type: string
+      page:
+        description: A page number within the paginated result set.
+        required: false
+        type: integer
+    (oas-tags):
+      - api
+  uriParameters:
+    format:
+      type: string
+  '/desc{format}':
+    get:
+      description: Class used to search events in the "description" attribute
+      displayName: api_search_read
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        search:
+          description: A search term.
+          required: false
+          type: string
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - api
+    uriParameters:
+      format:
+        type: string
+  '/level{format}':
+    get:
+      description: Class used to search events in the "level" attribute
+      displayName: api_search_read
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        search:
+          description: A search term.
+          required: false
+          type: string
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - api
+    uriParameters:
+      format:
+        type: string
+  /address/:
+    get:
+      description: Class used to search events in the "address" attribute
+      displayName: api_search_address_list
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        search:
+          description: A search term.
+          required: false
+          type: string
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - api
+  /desc/:
+    get:
+      description: Class used to search events in the "description" attribute
+      displayName: api_search_desc_list
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        search:
+          description: A search term.
+          required: false
+          type: string
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - api
+  /level/:
+    get:
+      description: Class used to search events in the "level" attribute
+      displayName: api_search_level_list
+      responses:
+        '200':
+          body:
+            application/json:
+              type: object
+              properties:
+                count:
+                  type: integer
+                next:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                previous:
+                  type: string
+                  (oas-format): uri
+                  (nullable): true
+                  required: false
+                results:
+                  type: array
+                  items:
+                    type: EventList
+      queryParameters:
+        search:
+          description: A search term.
+          required: false
+          type: string
+        page:
+          description: A page number within the paginated result set.
+          required: false
+          type: integer
+      (oas-tags):
+        - api
+/get_token/:
+  post:
+    displayName: get_token_create
+    responses:
+      '201': {}
+    (oas-tags):
+      - get_token
+/register/:
+  post:
+    description: Class used to register user
+    displayName: register_create
+    responses:
+      '201':
+        body:
+          application/json:
+            type: Register
+    body:
+      application/json:
+        type: Register
+        (oas-body-name): data
+    (oas-tags):
+      - register

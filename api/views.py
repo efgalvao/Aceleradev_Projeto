@@ -10,6 +10,7 @@ from rest_framework.pagination import PageNumberPagination
 from .models import Event
 from .serializers import EventListSerializer, EventDetailSerializer, EventCreateSerializer
 from .serializers import RegisterSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 
 def freq_update():
@@ -29,7 +30,18 @@ class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
-    
+         
+    @swagger_auto_schema(
+        request_body=EventDetailSerializer,
+        query_serializer=EventDetailSerializer,
+        responses={
+            '200': 'Ok Request',
+            '400': "Bad Request"
+        },
+        security=[],
+        operation_id='Create Event',
+        operation_description='Creation of events',
+    )
     def create(self, request, *args, **kwargs):
         """
             Method for creation of events 
@@ -44,6 +56,11 @@ class EventViewSet(ModelViewSet):
             data = serializer.errors
         return Response(data)
     
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='List of events',
+        operation_description='This endpoint list all events',
+    )
     def list(self, request, *args, **kwargs):
         """
         Method for listing events 
@@ -55,11 +72,21 @@ class EventViewSet(ModelViewSet):
         serializer = EventListSerializer(resultado, many=True)
         return paginacao.get_paginated_response(serializer.data)
 
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='Deletion of events',
+        operation_description='This endpoint delete an event'
+    )
     def destroy(self, request, pk=None):
         erro = Event.objects.get(id=pk)
         erro.delete()
         return Response("Evento removido")
-
+     
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='Update of events',
+        operation_description='Update event',
+    )
     def update(self, request, pk=None):
         erro = Event.objects.get(id=pk)
         serializer = EventCreateSerializer(data=request.data)
@@ -71,6 +98,11 @@ class EventViewSet(ModelViewSet):
             data = serializer.errors
         return Response(data)
 
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='Partial update of events',
+        operation_description='Partial update of events',
+    )
     def partial_update(self, request, pk=None):
         event = Event.objects.get(id=pk)
         serializer = EventCreateSerializer(event, data=request.data, partial=True)
@@ -125,6 +157,11 @@ class Register_View(CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
 
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='User creation',
+        operation_description='Register an user',
+    )
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         data = {}
@@ -140,6 +177,11 @@ class Filter(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = EventListSerializer
 
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='List of events filtered by environment',
+        operation_description='This endpoint list all events filtered by environment',
+    )
     def get_queryset(self):
         """
         This view should return a list of events filtered by the environment 
@@ -154,6 +196,11 @@ class Level(generics.ListAPIView):
     serializer_class = EventListSerializer
     queryset = ''
 
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='List of events ordered by level',
+        operation_description='This endpoint list all events ordered by level',
+    )
     def get(self, request):
         """
         This view should return a list of all events ordered by level.
@@ -172,6 +219,11 @@ class Freq(generics.ListAPIView):
     serializer_class = EventListSerializer
     queryset = ''
 
+    @swagger_auto_schema(
+        security=['token'],
+        operation_id='List of events ordered by frequency',
+        operation_description='This endpoint list all events ordered by frequency',
+    )
     def get(self, request, format=None):
         """
         This view should return a list of all events ordered by frequency.

@@ -24,8 +24,8 @@ class EventViewSet(ModelViewSet):
     """
         Viewset for Events
     """    
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.all()
     serializer_class = EventDetailSerializer
 
@@ -83,8 +83,8 @@ class Events_Search_level(generics.ListAPIView):
     """
         Class used to search events in the "level" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     freq_update()
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
@@ -96,8 +96,8 @@ class Events_Search_description(generics.ListAPIView):
     """
         Class used to search events in the "description" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     freq_update()
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
@@ -109,8 +109,8 @@ class Events_Search_address(generics.ListAPIView):
     """
         Class used to search events in the "address" attribute
     """
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     freq_update()
     queryset = Event.objects.all()
     serializer_class = EventListSerializer
@@ -136,8 +136,8 @@ class Register_View(CreateAPIView):
         return Response(data)
 
 class Filter(generics.ListAPIView):
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = EventListSerializer
 
     def get_queryset(self):
@@ -149,8 +149,8 @@ class Filter(generics.ListAPIView):
         return Event.objects.filter(env=env)
 
 class Level(generics.ListAPIView):
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = EventListSerializer
     queryset = ''
 
@@ -167,8 +167,8 @@ class Level(generics.ListAPIView):
 
 
 class Freq(generics.ListAPIView):
-    #authentication_classes = [TokenAuthentication]
-    #permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = EventListSerializer
     queryset = ''
 

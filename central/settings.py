@@ -41,7 +41,7 @@ INSTALLED_APPS = [
         'rest_framework',
         'rest_framework.authtoken',
         'rest_auth',
-        'rest_framework_swagger',
+        'drf_yasg',
         # Mine
         'api',
         ]
@@ -122,6 +122,6 @@ django_heroku.settings(locals())
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 50
-    
+    'PAGE_SIZE': 50,
+  
 }

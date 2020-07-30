@@ -47,11 +47,3 @@ class EventDetailSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
-
-class EventListSerializer(serializers.ModelSerializer):
-    """
-        Serializer for Event list
-    """
-    class Meta:
-        model = Event
-        fields = ('id', 'level', 'description', 'address', 'date', 'env', 'frequency')
